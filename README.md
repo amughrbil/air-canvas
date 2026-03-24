@@ -1,5 +1,7 @@
 # 🎨 Air Canvas Drawing Engine
 
+[![Live Demo](https://img.shields.io/badge/demo-live_now-brightgreen?style=for-the-badge&logo=vercel)](air-canvas-pi.vercel.app)
+
 A bare-metal, native HTML/JS drawing engine using Google MediaPipe. This allows users to draw on the screen using real-time hand tracking and computer vision, with zero external UI frameworks (no React, no extra dependencies).
 ## 🚀 Getting Started
 
