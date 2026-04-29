@@ -21,9 +21,62 @@
             width: 100vw; 
             height: 100vh; 
             background: #000; 
+            display: none;
         }
 
-        video { 
+      #intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #0a192f 0%, #020c1b 100%); 
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    font-family: 'Inter', sans-serif;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.intro-content {
+    max-width: 600px;
+    text-align: center;
+}
+
+.video-container video {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    margin: 20px 0;
+}
+
+.instructions {
+    text-align: left;
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+#start-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#start-btn:hover {
+    transform: scale(1.05);
+    background: #0056b3;
+}
+        #input_video { 
             position: absolute; 
             top: 0; 
             left: 0; 
@@ -83,6 +136,36 @@
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
+<div id="intro-screen">
+    <div class="intro-content">
+        <h1>Welcome to Air Canvas 🎨</h1>
+        <p>Experience the future of drawing using only your hand gestures.</p>
+
+        <div class="video-container">
+            <video id="demo-video" controls autoplay muted loop>
+                <source src="demo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div class="instructions" style="background: rgba(0, 123, 255, 0.1); border: 1px solid rgba(0, 123, 255, 0.3);">
+    <h3 style="color: #64ffda;">How to play:</h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div>🎯 <b>Left Hand:</b> Aim</div>
+        <div>🤏 <b>Right Pinch:</b> Draw/Click</div>
+        <div>✋ <b>Right Open:</b> Erase</div>
+        <div>✌️ <b>Right Peace:</b> Lock</div>
+    </div>
+</div>
+
+        <button id="start-btn">Start Drawing</button>
+    </div>
+</div>
+
+<div id="app-container" style="display: none;">
+    </div>
+
 
 <div id="container">
     <video id="input_video" playsinline></video>
@@ -642,6 +725,17 @@
             actualTilt = actualTilt * 0.4 + angle * 0.6;
         }
     });
+    document.getElementById('start-btn').addEventListener('click', () => {
+    
+   
+    document.getElementById('intro-screen').style.display = 'none';
+    
+    
+    document.getElementById('demo-video').pause();
+    
+    
+    document.getElementById('container').style.display = 'block';
+    resizeCanvas(); // Make sure the canvas fits the screen properly
 
     navigator.mediaDevices.enumerateDevices().then(async devices => {
         const videoDevices = devices.filter(d => d.kind === 'videoinput');
@@ -671,6 +765,7 @@
             console.error("Camera error:", err);
             alert("Could not access camera.");
         }
+    });
     });
 </script>
 </body>
